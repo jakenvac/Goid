@@ -6,10 +6,10 @@ import (
 
 // MakeNilUUID returns a UUID with all bits set to zero
 func MakeNilUUID() *UUID {
-	bytes := [16]byte{}
+	var bytes UUID = [16]byte{}
 	for i := 0; i < 16; i++ {
 		stringByte, _ := hex.DecodeString("00")
 		bytes[i] = stringByte[0]
 	}
-	return &UUID{bytes}
+	return &bytes
 }
