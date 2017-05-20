@@ -9,13 +9,29 @@ import (
 )
 
 func main() {
+
 	bytes := [16]byte{}
 	for i := 0; i < 16; i++ {
-		byteVals, _ := hex.DecodeString("ff")
+		var byteVals []byte
+		var hexVal string
+		if i == 6 {
+			hexVal = "12"
+		} else if i == 8 {
+			hexVal = "34"
+		} else {
+			hexVal = "ff"
+		}
+		byteVals, _ = hex.DecodeString(hexVal)
 		bytes[i] = byteVals[0]
 	}
 
-	guid := &goid.UUID{Version: 4, Octets: bytes}
-	fmt.Println(guid.ToString())
+	uuid := &goid.UUID{Octets: bytes}
+
+	fmt.Println("UUID:     " + uuid.ToString())
+	fmt.Println("Version:  " + uuid.GetVersion())
+	fmt.Println("Variant:  " + uuid.GetVariant())
+
+	nilUUID := goid.MakeNilUUID()
+	fmt.Println("Nil UUID: " + nilUUID.ToString())
 
 }
