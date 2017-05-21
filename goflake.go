@@ -4,12 +4,18 @@ package goflake
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"fmt"
 )
 
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
-func GetUUIDFromString(strUUID string) (error *UUID) {
-
+func GetUUIDFromString(strUUID string) (*UUID, error) {
+	var resError error
+	resUUID := &UUID{}
+	// TODO Do stuff in here
+	// TODO If error:
+	resError = fmt.Errorf("String: %v does not match thr format of a UUID", strUUID)
+	return resUUID, resError
 }
 
 // NewNilUUID returns a nil UUID (All bits set to zero)
