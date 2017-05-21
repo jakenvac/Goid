@@ -7,6 +7,18 @@ import (
 	"fmt"
 )
 
+// InitializeNewNodeID initializes the node ID to a fake MAC address used in
+// UUID V1 & V2 generation
+func InitializeNewNodeID() {
+	bytes := make([]byte, 16)
+	rand.Read(bytes)
+	for i, v := range bytes {
+		nodeID[i] = v
+	}
+	setMulticastBitOfNodeID()
+	isNodeIDSet = true
+}
+
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
 // BUG(JakeHL) GetUUIDFromString Not Implemented yet
@@ -34,7 +46,11 @@ func NewNilUUID() *UUID {
 // Note: Upon running, it will check if a NodeID has been initialized, if not, it will do do so.
 // This can be done manually with InitializeNewNodeID
 func NewV1UUID() *UUID {
-
+	if !isNodeIDSet {
+		InitializeNewNodeID()
+	}
+	// TODO Implement NewV1UUID()
+	return nil
 }
 
 // NewV4UUID returns a randomized version 4 UUID
@@ -53,9 +69,10 @@ func NewV4UUID() *UUID {
 }
 
 /* == Unexported methods & variables == */
+var isNodeIDSet = false
 var nodeID [6]byte
 
 // setMulticaseBitOfNodeID sets the last bit of the first octet of the node ID to 1
-func setMulticastBitOfNodeID(bytes *[6]byte) {
-	bytes[0] = bytes[0] | 0x1
+func setMulticastBitOfNodeID() {
+	nodeID[0] = nodeID[0] | 0x1
 }
