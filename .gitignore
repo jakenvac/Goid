@@ -1,3 +1,5 @@
 
 .vscode/*
 cmd/debug
+cmd/cmd
+cmd/testapp/testapp

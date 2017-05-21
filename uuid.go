@@ -18,6 +18,12 @@ func (u *UUID) ToString() string {
 	return result
 }
 
+// ToGUIDString surrounds the uuid string in { } to mimic a microsoft guid
+// Note: This has not been developed to any microsoft standards
+func (u *UUID) ToGUIDString() string {
+	return "{" + u.ToString() + "}"
+}
+
 // GetVersion returns the version of the UUID based on the 13th character (1st char of 7th byte) of the UUID
 func (u *UUID) GetVersion() string {
 	bytes := []byte{u[6]}
@@ -43,9 +49,9 @@ func (u *UUID) SetVersion(v uint16) error {
 	return errors.New("UUID version outside of range")
 }
 
-// TODO finetune uuid.SetVariant
 // SetVariant sets the variant of the guid (first nibble of the 9th byte)
 // Returns an error if the variant not valid
+// TODO finetune uuid.SetVariant
 func (u *UUID) SetVariant(v uint16) error {
 	if v > 0 && v <= 5 {
 		version := byte(v) << 4
