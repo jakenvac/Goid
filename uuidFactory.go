@@ -1,4 +1,4 @@
-package goid
+package goflake
 
 import (
 	"crypto/rand"

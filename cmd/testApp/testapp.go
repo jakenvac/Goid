@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/jakehl/goid"
+	"github.com/jakehl/goflake"
 )
 
 func main() {
 	for i := 0; i < 100; i++ {
-		uuid := goid.NewV4UUID()
+		uuid := goflake.NewV4UUID()
 		fmt.Println(uuid.ToString())
 	}
 }

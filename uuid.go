@@ -1,4 +1,4 @@
-package goid
+package goflake
 
 /* Goid (c) 2017 jlangford.uk */
 /* This file contains the struct and it's relevant methods for a UUID */
@@ -45,6 +45,8 @@ func (u *UUID) SetVersion(v byte) {
 // SetVariant sets the variant of the guid (first nibble of the 9th byte)
 // TODO finetune uuid.SetVariant
 func (u *UUID) SetVariant() {
+	// Clear the first two bits of the byte
 	u[8] = u[8] & 0x3f
+	// Set the first two bits of the byte to 10
 	u[8] = u[8] | 0x80
 }

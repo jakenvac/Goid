@@ -1,1 +1,2 @@
 # Index
+[Usage](/usage.md)
