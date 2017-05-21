@@ -9,10 +9,11 @@ import (
 
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
+// BUG(JakeHL) GetUUIDFromString Not Implemented yet
 func GetUUIDFromString(strUUID string) (*UUID, error) {
 	var resError error
 	resUUID := &UUID{}
-	// BUG(JakeHL) Not Implemented yet
+
 	// TODO Do stuff in here
 	// TODO If error:
 	resError = fmt.Errorf("String: %v does not match thr format of a UUID", strUUID)
@@ -29,6 +30,13 @@ func NewNilUUID() *UUID {
 	return &bytes
 }
 
+// NewV1UUID returns a time and node ID based version 1 UUID
+// Note: Upon running, it will check if a NodeID has been initialized, if not, it will do do so.
+// This can be done manually with InitializeNewNodeID
+func NewV1UUID() *UUID {
+
+}
+
 // NewV4UUID returns a randomized version 4 UUID
 func NewV4UUID() *UUID {
 	bytes := make([]byte, 16)
@@ -42,4 +50,12 @@ func NewV4UUID() *UUID {
 	result.SetVersion(4)
 	result.SetVariant()
 	return &result
+}
+
+/* == Unexported methods & variables == */
+var nodeID [6]byte
+
+// setMulticaseBitOfNodeID sets the last bit of the first octet of the node ID to 1
+func setMulticastBitOfNodeID(bytes *[6]byte) {
+	bytes[0] = bytes[0] | 0x1
 }

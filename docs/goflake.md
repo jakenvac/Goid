@@ -72,7 +72,7 @@ SetVersion sets the version of the guid (first nibble of the 7th byte)
 ```go
 func (u *UUID) ToGUIDString() string
 ```
-ToGUIDString surrounds the uuid string in { } to mimic a microsoft GUID Note:
+ToGUIDString surrounds the UUID string in { } to mimic a microsoft GUID Note:
 This has not been developed to any microsoft standards
 
 #### func (*UUID) ToString
@@ -80,4 +80,4 @@ This has not been developed to any microsoft standards
 ```go
 func (u *UUID) ToString() string
 ```
-ToString converts the desired guid into a string
+ToString converts the UUID into its string representation

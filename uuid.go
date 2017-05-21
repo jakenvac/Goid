@@ -1,6 +1,6 @@
 package goflake
 
-/* Goid (c) 2017 jlangford.uk */
+/* Goflake (c) 2017 jlangford.uk */
 /* This file contains the struct and it's relevant methods for a UUID */
 
 import (
@@ -10,14 +10,14 @@ import (
 // UUID Represents a UUID or GUID
 type UUID [16]byte
 
-// ToString converts the desired guid into a string
+// ToString converts the UUID into its string representation
 func (u *UUID) ToString() string {
 	result := hex.EncodeToString(u[:])
 	result = result[:8] + "-" + result[8:12] + "-" + result[12:16] + "-" + result[16:20] + "-" + result[20:]
 	return result
 }
 
-// ToGUIDString surrounds the uuid string in { } to mimic a microsoft GUID
+// ToGUIDString surrounds the UUID string in { } to mimic a microsoft GUID
 // Note: This has not been developed to any microsoft standards
 func (u *UUID) ToGUIDString() string {
 	return "{" + u.ToString() + "}"
