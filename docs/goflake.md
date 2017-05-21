@@ -6,6 +6,14 @@ Package goflake provides the tools needed to produce and manipulate UUIDs
 
 ## Usage
 
+#### func  InitializeNewNodeID
+
+```go
+func InitializeNewNodeID()
+```
+InitializeNewNodeID initializes the node ID to a fake MAC address used in UUID
+V1 & V2 generation
+
 #### type UUID
 
 ```go
@@ -20,7 +28,8 @@ UUID Represents a UUID or GUID
 func GetUUIDFromString(strUUID string) (*UUID, error)
 ```
 GetUUIDFromString takes a string representing a UUID and converts it to a UUID
-type Returns an error if the string does not match a UUID
+type Returns an error if the string does not match a UUID BUG(JakeHL)
+GetUUIDFromString Not Implemented yet
 
 #### func  NewNilUUID
 
@@ -28,6 +37,15 @@ type Returns an error if the string does not match a UUID
 func NewNilUUID() *UUID
 ```
 NewNilUUID returns a nil UUID (All bits set to zero)
+
+#### func  NewV1UUID
+
+```go
+func NewV1UUID() *UUID
+```
+NewV1UUID returns a time and node ID based version 1 UUID Note: Upon running, it
+will check if a NodeID has been initialized, if not, it will do do so. This can
+be done manually with InitializeNewNodeID
 
 #### func  NewV4UUID
 

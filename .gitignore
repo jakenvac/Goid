@@ -2,6 +2,6 @@
 .vscode/*
 cmd/debug
 cmd/cmd
-cmd/testapp/testapp
-crm/testapp/debug
+cmd/testApp/testApp
+crm/testApp/debug
 .genDocs
