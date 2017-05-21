@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1000000; i++ {
 		uuid := goflake.NewV4UUID()
 		fmt.Println(uuid.ToString())
 	}

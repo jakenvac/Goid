@@ -12,6 +12,7 @@ import (
 func GetUUIDFromString(strUUID string) (*UUID, error) {
 	var resError error
 	resUUID := &UUID{}
+	// BUG(JakeHL) Not Implemented yet
 	// TODO Do stuff in here
 	// TODO If error:
 	resError = fmt.Errorf("String: %v does not match thr format of a UUID", strUUID)
