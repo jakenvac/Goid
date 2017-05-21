@@ -1,3 +1,4 @@
+// Package goflake provides the tools needed to produce and manipulate UUIDs
 package goflake
 
 import (
@@ -5,7 +6,13 @@ import (
 	"encoding/hex"
 )
 
-// NewNilUUID returns a UUID with all bits set to zero
+// GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
+// Returns an error if the string does not match a UUID
+func GetUUIDFromString(strUUID string) (error *UUID) {
+
+}
+
+// NewNilUUID returns a nil UUID (All bits set to zero)
 func NewNilUUID() *UUID {
 	var bytes UUID = [16]byte{}
 	for i := 0; i < 16; i++ {
@@ -15,7 +22,7 @@ func NewNilUUID() *UUID {
 	return &bytes
 }
 
-// NewV4UUID returns a generated version 5 UUID
+// NewV4UUID returns a randomized version 4 UUID
 func NewV4UUID() *UUID {
 	bytes := make([]byte, 16)
 	rand.Read(bytes)

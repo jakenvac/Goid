@@ -3,7 +3,7 @@ A UUID generation package written in Go
 
 > *"No two Gophers are the same"* - Me
 
-That's why we need UUIDs to identify them all.
+That's why we need UUIDs to identify the special snowflakes.
 
 ### Notes
 This package is under heavy development and is currently for my own learning. If you have ended up here, please use this with caution as
