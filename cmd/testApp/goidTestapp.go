@@ -8,7 +8,7 @@ import (
 
 func main() {
 	for i := 0; i < 100; i++ {
-		uuid := goid.NewV5UUID()
+		uuid := goid.NewV4UUID()
 		fmt.Println(uuid.ToString())
 	}
 }

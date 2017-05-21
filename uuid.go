@@ -5,7 +5,6 @@ package goid
 
 import (
 	"encoding/hex"
-	"errors"
 )
 
 // UUID Represents a UUID or GUID
@@ -18,7 +17,7 @@ func (u *UUID) ToString() string {
 	return result
 }
 
-// ToGUIDString surrounds the uuid string in { } to mimic a microsoft guid
+// ToGUIDString surrounds the uuid string in { } to mimic a microsoft GUID
 // Note: This has not been developed to any microsoft standards
 func (u *UUID) ToGUIDString() string {
 	return "{" + u.ToString() + "}"
@@ -39,24 +38,13 @@ func (u *UUID) GetVariant() string {
 }
 
 // SetVersion sets the version of the guid (first nibble of the 7th byte)
-// Returns an error if the version is not valid
-func (u *UUID) SetVersion(v uint16) error {
-	if v > 0 && v <= 5 {
-		version := byte(v) << 4
-		u[6] = version | (u[6] & 0xf)
-		return nil
-	}
-	return errors.New("UUID version outside of range")
+func (u *UUID) SetVersion(v byte) {
+	u[6] = (v << 4) | (u[6] & 0xf)
 }
 
 // SetVariant sets the variant of the guid (first nibble of the 9th byte)
-// Returns an error if the variant not valid
 // TODO finetune uuid.SetVariant
-func (u *UUID) SetVariant(v uint16) error {
-	if v > 0 && v <= 5 {
-		version := byte(v) << 4
-		u[6] = version | (u[8] & 0xf)
-		return nil
-	}
-	return errors.New("UUID version outside of range")
+func (u *UUID) SetVariant() {
+	u[8] = u[8] & 0x3f
+	u[8] = u[8] | 0x80
 }

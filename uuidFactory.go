@@ -15,8 +15,8 @@ func NewNilUUID() *UUID {
 	return &bytes
 }
 
-// NewV5UUID returns a generated version 5 UUID
-func NewV5UUID() *UUID {
+// NewV4UUID returns a generated version 5 UUID
+func NewV4UUID() *UUID {
 	bytes := make([]byte, 16)
 	rand.Read(bytes)
 
@@ -25,6 +25,7 @@ func NewV5UUID() *UUID {
 		result[i] = v
 	}
 
-	result.SetVersion(5)
+	result.SetVersion(4)
+	result.SetVariant()
 	return &result
 }
