@@ -3,3 +3,4 @@
 cmd/debug
 cmd/cmd
 cmd/testapp/testapp
+crm/testapp/debug
