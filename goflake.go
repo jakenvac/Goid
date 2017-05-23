@@ -3,51 +3,46 @@ package goflake
 
 import (
 	"crypto/rand"
-	"encoding/hex"
-	"fmt"
 )
 
-// InitializeNewNodeID initializes the node ID to a fake MAC address used in
+// InitializeNewRandomNodeID initializes the node ID to a fake MAC address used in
 // UUID V1 & V2 generation
-func InitializeNewNodeID() {
-	bytes := make([]byte, 16)
+func InitializeNewRandomNodeID() {
+	bytes := make([]byte, 6)
 	rand.Read(bytes)
 	for i, v := range bytes {
 		nodeID[i] = v
 	}
-	setMulticastBitOfNodeID()
+	setMulticastAndLocalBitsOfNodeID()
+	isNodeIDSet = true
+}
+
+// SetNodeID allows the node ID to be set manually, eg. to a real hardware
+// if overwriteBits is set to true, the last two bits of the first octet will be set to 1
+func SetNodeID(ID [6]byte, overwriteBits bool) {
+	nodeID = ID
+	setMulticastAndLocalBitsOfNodeID()
 	isNodeIDSet = true
 }
 
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
-// BUG(JakeHL) GetUUIDFromString Not Implemented yet
 func GetUUIDFromString(strUUID string) (*UUID, error) {
-	var resError error
-	resUUID := &UUID{}
-
-	// TODO Do stuff in here
-	// TODO If error:
-	resError = fmt.Errorf("String: %v does not match thr format of a UUID", strUUID)
-	return resUUID, resError
+	// BUG(JakeHL) GetUUIDFromString Not Implemented yet
+	panic("Not Implemented")
 }
 
 // NewNilUUID returns a nil UUID (All bits set to zero)
 func NewNilUUID() *UUID {
-	var bytes UUID = [16]byte{}
-	for i := 0; i < 16; i++ {
-		stringByte, _ := hex.DecodeString("00")
-		bytes[i] = stringByte[0]
-	}
-	return &bytes
+	return &UUID{}
 }
 
 // NewV1UUID returns a time and node ID based version 1 UUID
 // Note: Upon running, it will check if a NodeID has been initialized, if not, it will do do so.
-// This can be done manually with InitializeNewNodeID
+// This can be done manually with InitializeNewRandomNodeID or SetNodeID
 func NewV1UUID() *UUID {
 	if !isNodeIDSet {
-		InitializeNewNodeID()
+		InitializeNewRandomNodeID()
 	}
 	// TODO Implement NewV1UUID()
 	return nil
@@ -72,7 +67,7 @@ func NewV4UUID() *UUID {
 var isNodeIDSet = false
 var nodeID [6]byte
 
-// setMulticaseBitOfNodeID sets the last bit of the first octet of the node ID to 1
-func setMulticastBitOfNodeID() {
-	nodeID[0] = nodeID[0] | 0x1
+// setMulticaseBitOfNodeID sets the last two bits of the first octet of the node ID to 1
+func setMulticastAndLocalBitsOfNodeID() {
+	nodeID[0] = nodeID[0] | 0x3
 }

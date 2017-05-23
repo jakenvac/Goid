@@ -5,3 +5,4 @@ cmd/cmd
 cmd/testApp/testApp
 crm/testApp/debug
 .genDocs
+.tmp/*
