@@ -21,7 +21,9 @@ func InitializeNewRandomNodeID() {
 // if overwriteBits is set to true, the last two bits of the first octet will be set to 1
 func SetNodeID(ID [6]byte, overwriteBits bool) {
 	nodeID = ID
-	setMulticastAndLocalBitsOfNodeID()
+	if overwriteBits {
+		setMulticastAndLocalBitsOfNodeID()
+	}
 	isNodeIDSet = true
 }
 
