@@ -17,7 +17,7 @@ func InitializeNewRandomNodeID() {
 	isNodeIDSet = true
 }
 
-// SetNodeID allows the node ID to be set manually, eg. to a real hardware
+// SetNodeID allows the node ID to be set manually, eg. to a real hardware address
 // if overwriteBits is set to true, the last two bits of the first octet will be set to 1
 func SetNodeID(ID [6]byte, overwriteBits bool) {
 	nodeID = ID
