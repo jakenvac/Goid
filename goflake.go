@@ -100,4 +100,4 @@ func (u *UUID) SetVariant() {
 }
 
 // V4UUIDRegex is a simple string regex that will match valid v4 UUIDs
-const V4UUIDRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"
+const V4UUIDRegex = "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\\b"

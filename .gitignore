@@ -7,3 +7,4 @@ crm/testApp/debug
 .genDocs
 .tmp/*
 cmd/*
+debug.test
