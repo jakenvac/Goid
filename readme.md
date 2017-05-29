@@ -6,10 +6,10 @@ A UUID generation package written in Go
 That's why we need UUIDs to identify the special snowflakes.
 
 ## Documentation
-Currently docs can be viewed [here](https://godoc.org/github.com/JakeHL/Goflake) or generated with godoc.
+The API docs can be viewed [here](https://godoc.org/github.com/JakeHL/Goflake) or generated with godoc.
 
 ### Usage
-An example of generating a v4 UUID
+An example of generating a v4 UUID and outputting it
 ```go
 import (
     "fmt"
@@ -18,15 +18,20 @@ import (
 
 func main() {
     v4UUID := goflake.NewV4UUID()
-    fmt.PrintLn(v4UUID.ToString())
+    fmt.PrintLn(v4UUID)
 }
 ```
 
 ## Notes
-This package is under heavy development and is currently for my own learning. If you have ended up here, please use this with caution as
-i'll most definitely implement breaking changes during the early phases of development & UUIDs may not be to standard. 🙃
+### Contributing & Package status
+Currently this package should generate RFC4122 compliant Version 4 UUIDs and the existing APIs to do so should not change. New features may be added via pull requests, however they should not touch existing APIs
 
-### Sources
+### Todo
+- [ ] Add optimised bulk UUID generation
+- [ ] Add UUID math operations
+- [ ] Add other UUID versions? 
+
+### References
 The following sources were referenced during the development of this project
 - http://www.cryptosys.net/pki/uuid-rfc4122.html
 - http://www.ietf.org/rfc/rfc4122.txt

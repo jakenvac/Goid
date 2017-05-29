@@ -9,7 +9,6 @@ import (
 func main() {
 	for i := 0; i < 5; i++ {
 		uuid := goflake.NewV4UUID()
-		fmt.Println(uuid.ToString())
-		fmt.Println(goflake.NewNilUUID().ToString())
+		fmt.Println(uuid)
 	}
 }

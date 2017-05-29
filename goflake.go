@@ -1,53 +1,73 @@
-// Package goflake provides the tools needed to produce and manipulate UUIDs
+// Package goflake provides the tools needed to produce and manipulate V4 UUIDs
 package goflake
 
 import (
 	"crypto/rand"
+	"encoding/hex"
+	"fmt"
+	"regexp"
+	"strings"
 )
 
-// InitializeNewRandomNodeID initializes the node ID to a fake MAC address used in
-// UUID V1 & V2 generation
-func InitializeNewRandomNodeID() {
-	bytes := make([]byte, 6)
-	rand.Read(bytes)
-	for i, v := range bytes {
-		nodeID[i] = v
-	}
-	setMulticastAndLocalBitsOfNodeID()
-	isNodeIDSet = true
+// UUID Represents a UUID or GUID
+type UUID [16]byte
+
+// ToString converts the UUID into its string representation
+func (u *UUID) ToString() string {
+	result := hex.EncodeToString(u[:])
+	result = result[:8] + "-" + result[8:12] + "-" + result[12:16] + "-" + result[16:20] + "-" + result[20:]
+	return result
 }
 
-// SetNodeID allows the node ID to be set manually, eg. to a real hardware address
-// if overwriteBits is set to true, the last two bits of the first octet will be set to 1
-func SetNodeID(ID [6]byte, overwriteBits bool) {
-	nodeID = ID
-	if overwriteBits {
-		setMulticastAndLocalBitsOfNodeID()
-	}
-	isNodeIDSet = true
+// String provides stringer functionality for fmt.Print functionality
+func (u *UUID) String() string {
+	return u.ToString()
 }
+
+// ToGUIDString surrounds the UUID string in { } to mimic a microsoft GUID
+// Note: This has not been developed to any microsoft standards
+func (u *UUID) ToGUIDString() string {
+	return "{" + u.ToString() + "}"
+}
+
+// GetVersion returns the version of the UUID based on the 13th character (1st char of 7th byte) of the UUID
+func (u *UUID) GetVersion() string {
+	bytes := []byte{u[6]}
+	result := hex.EncodeToString(bytes)[:1]
+	return result
+}
+
+/* ### UUID Generation ### */
 
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
 func GetUUIDFromString(strUUID string) (*UUID, error) {
-	// BUG(JakeHL) GetUUIDFromString Not Implemented yet
-	panic("Not Implemented")
+	if ismatch, _ := regexp.MatchString(V4UUIDRegex, strUUID); !ismatch {
+		return nil, fmt.Errorf("%s is not a valid v4 UUID", strUUID)
+	}
+	strUUID = strings.Replace(strUUID, "-", "", 4)
+	resultUUIDSlice, _ := hex.DecodeString(strUUID)
+	resultUUID, _ := GetUUIDFromByteSlice(resultUUIDSlice)
+	return resultUUID, nil
+}
+
+// GetUUIDFromByteSlice takes a slice of bytes and converts it to a UUID
+// If the slice is not 16 bytes long it will return an error
+// This does not check for Version or Variant compliance - Use GetUUIDFromString where possible
+func GetUUIDFromByteSlice(slice []byte) (*UUID, error) {
+	if len(slice) != 16 {
+		return nil, fmt.Errorf("%s is not 16 bytes in lenght", slice)
+	}
+	var uuid UUID
+	for i, v := range slice {
+		uuid[i] = v
+	}
+	return &uuid, nil
 }
 
 // NewNilUUID returns a nil UUID (All bits set to zero)
 func NewNilUUID() *UUID {
 	return &UUID{}
-}
-
-// NewV1UUID returns a time and node ID based version 1 UUID
-// Note: Upon running, it will check if a NodeID has been initialized, if not, it will do do so.
-// This can be done manually with InitializeNewRandomNodeID or SetNodeID
-func NewV1UUID() *UUID {
-	if !isNodeIDSet {
-		InitializeNewRandomNodeID()
-	}
-	// TODO Implement NewV1UUID()
-	return nil
 }
 
 // NewV4UUID returns a randomized version 4 UUID
@@ -65,11 +85,19 @@ func NewV4UUID() *UUID {
 	return &result
 }
 
-/* == Unexported methods & variables == */
-var isNodeIDSet = false
-var nodeID [6]byte
-
-// setMulticaseBitOfNodeID sets the last two bits of the first octet of the node ID to 1
-func setMulticastAndLocalBitsOfNodeID() {
-	nodeID[0] = nodeID[0] | 0x3
+// SetVersion sets the version of the guid (first nibble of the 7th byte)
+func (u *UUID) SetVersion(v byte) {
+	u[6] = (v << 4) | (u[6] & 0xf)
 }
+
+// SetVariant sets the variant of the guid (first nibble of the 9th byte)
+// TODO finetune uuid.SetVariant
+func (u *UUID) SetVariant() {
+	// Clear the first two bits of the byte
+	u[8] = u[8] & 0x3f
+	// Set the first two bits of the byte to 10
+	u[8] = u[8] | 0x80
+}
+
+// V4UUIDRegex is a simple string regex that will match valid v4 UUIDs
+const V4UUIDRegex = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"
