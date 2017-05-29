@@ -28,3 +28,22 @@ func TestGetUUIDFromString(t *testing.T) {
 		}
 	}
 }
+
+func TestGetUUIDFromByteSlice(t *testing.T) {
+	testUUID := "40db20bd-e9ea-41d9-bed4-473b5e147582"
+	expectedUUID, _ := GetUUIDFromString(testUUID)
+	actualUUID, _ := GetUUIDFromByteSlice(expectedUUID[:])
+	if *actualUUID != *expectedUUID {
+		t.Fatalf("Expected %s, got %s", expectedUUID, actualUUID)
+	}
+}
+
+func TestGetVersion(t *testing.T) {
+	testUUID := "40db20bd-e9ea-41d9-bed4-473b5e147582"
+	resultingUUID, _ := GetUUIDFromString(testUUID)
+	expectedVersion := "4"
+	actualVersion := resultingUUID.GetVersion()
+	if actualVersion != expectedVersion {
+		t.Fatalf("Got %s, expected %s", actualVersion, expectedVersion)
+	}
+}
