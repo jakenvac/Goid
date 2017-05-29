@@ -56,7 +56,7 @@ func GetUUIDFromString(strUUID string) (*UUID, error) {
 // This does not check for Version or Variant compliance - Use GetUUIDFromString where possible
 func GetUUIDFromByteSlice(slice []byte) (*UUID, error) {
 	if len(slice) != 16 {
-		return nil, fmt.Errorf("%s is not 16 bytes in lenght", slice)
+		return nil, fmt.Errorf("%s is not 16 bytes in length", slice)
 	}
 	var uuid UUID
 	for i, v := range slice {
