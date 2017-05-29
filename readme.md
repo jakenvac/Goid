@@ -1,5 +1,9 @@
 # Goflake ❄️
-A UUID generation package written in Go
+A UUID generation package written in Go  
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/JakeHL/Goflake)](https://goreportcard.com/report/github.com/JakeHL/Goflake)
+[![cover.run go](https://cover.run/go/github.com/jakehl/goflake.svg)](https://cover.run/go/github.com/jakehl/goflake)
+[![Go Docs](https://godoc.org/github.com/jakehl/goflake?status.svg)](https://godoc.org/github.com/jakehl/goflake)
 
 > *"No two Gophers are the same"* - Me
 
