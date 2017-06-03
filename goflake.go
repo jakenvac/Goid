@@ -1,5 +1,5 @@
-// Package goflake provides the tools needed to produce and manipulate V4 UUIDs
-package goflake
+// Package goid provides the tools needed to produce and manipulate V4 UUIDs
+package goid
 
 import (
 	"crypto/rand"

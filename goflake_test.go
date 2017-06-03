@@ -1,4 +1,4 @@
-package goflake
+package goid
 
 import "testing"
 import "regexp"
