@@ -2,7 +2,7 @@
 A UUID generation package written in Go  
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/JakeHL/goid)](https://goreportcard.com/report/github.com/JakeHL/goid)
-[![cover.run go](https://cover.run/go/github.com/jakehl/goid.svg)](https://cover.run/go/github.com/jakehl/goid)
+[![cover.run](https://cover.run/go/github.com/jakehl/goid.svg?style=flat&tag=golang-1.10)](https://cover.run/go?tag=golang-1.10&repo=github.com%2Fjakehl%2Fgoid)
 [![Go Docs](https://godoc.org/github.com/jakehl/goid?status.svg)](https://godoc.org/github.com/jakehl/goid)
 
 ## Documentation
