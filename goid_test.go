@@ -6,7 +6,7 @@ import "regexp"
 func TestGeneratedV4UUIDisRFC4122Compliant(t *testing.T) {
 	actualResult := NewV4UUID()
 	t.Logf("Generated: %s", actualResult)
-	if ismatch, err := regexp.MatchString(V4UUIDRegex, actualResult.ToString()); !ismatch {
+	if ismatch, err := regexp.MatchString(V4UUIDRegex, actualResult.String()); !ismatch {
 		if err != nil {
 			t.Fatalf(err.Error())
 		} else {
@@ -23,8 +23,8 @@ func TestGetUUIDFromString(t *testing.T) {
 	} else if resultingUUID == nil {
 		t.Fatal("Failed to GetUUIDFromString")
 	} else {
-		if resultingUUID.ToString() != testUUID {
-			t.Fatalf("Input: %s does not match output of: %s", testUUID, resultingUUID.ToString())
+		if resultingUUID.String() != testUUID {
+			t.Fatalf("Input: %s does not match output of: %s", testUUID, resultingUUID.String())
 		}
 	}
 }

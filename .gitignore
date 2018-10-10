@@ -1,10 +1,6 @@
 
 .vscode/*
-cmd/debug
-cmd/cmd
-cmd/testApp/testApp
-crm/testApp/debug
-.genDocs
-.tmp/*
-cmd/*
+*.exe
+debug
 debug.test
+go.sum
