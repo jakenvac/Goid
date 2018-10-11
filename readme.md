@@ -1,6 +1,6 @@
 # Goid
 
-A v4 UUID generation package written in Go
+A Go package to generate V4 UUIDs
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/JakeHL/goid)](https://goreportcard.com/report/github.com/JakeHL/goid)
 [![cover.run](https://cover.run/go/github.com/jakehl/goid.svg?style=flat&tag=golang-1.10)](https://cover.run/go?tag=golang-1.10&repo=github.com%2Fjakehl%2Fgoid)
@@ -35,8 +35,6 @@ Currently this package should generate RFC4122 compliant Version 4 UUIDs and the
 ### Todo
 
 - [ ] Add optimised bulk UUID generation
-- [ ] Add UUID math operations
-- [ ] Add other UUID versions?
 
 ### References
 

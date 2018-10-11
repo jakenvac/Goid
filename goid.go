@@ -9,17 +9,17 @@ import (
 	"strings"
 )
 
+func init() {
+	v4Regex, _ = regexp.Compile(V4UUIDRegex)
+}
+
 // V4UUIDRegex is a simple string regex that will match valid v4 UUIDs
 const V4UUIDRegex = "\\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\\b"
 
 var v4Regex *regexp.Regexp
 
-// UUID Represents a UUID or GUID
+// UUID Represents a UUID
 type UUID [16]byte
-
-func init() {
-	v4Regex, _ = regexp.Compile(V4UUIDRegex)
-}
 
 // ToString converts the UUID into its string representation
 func (u *UUID) String() string {
@@ -35,8 +35,6 @@ func (u *UUID) GetVersion() string {
 	return result
 }
 
-/* ### UUID Generation ### */
-
 // GetUUIDFromString takes a string representing a UUID and converts it to a UUID type
 // Returns an error if the string does not match a UUID
 func GetUUIDFromString(strUUID string) (*UUID, error) {
@@ -51,12 +49,12 @@ func GetUUIDFromString(strUUID string) (*UUID, error) {
 
 // GetUUIDFromByteSlice takes a slice of bytes and converts it to a UUID
 // If the slice is not 16 bytes long it will return an error
-// This does not check for Version or Variant compliance - Use GetUUIDFromString where possible
+// @TODO add version checking
 func GetUUIDFromByteSlice(slice []byte) (*UUID, error) {
-	if len(slice) != 16 {
-		return nil, fmt.Errorf("%s is not 16 bytes in length", slice)
+	if length := len(slice); length != 16 {
+		return nil, fmt.Errorf("%s is %d bytes. Expects 16", slice, length)
 	}
-	var uuid UUID
+	uuid := UUID{}
 	for i, v := range slice {
 		uuid[i] = v
 	}
@@ -69,26 +67,35 @@ func NewNilUUID() *UUID {
 }
 
 // NewV4UUID returns a randomized version 4 UUID
-func NewV4UUID() *UUID {
+func NewV4UUID() (result *UUID) {
 	bytes := make([]byte, 16)
 	rand.Read(bytes)
 
-	result := UUID{}
+	result = &UUID{}
 	for i, v := range bytes {
 		result[i] = v
 	}
 
 	result.setVersion(4)
 	result.setVariant()
-	return &result
+	return
 }
 
-// SetVersion sets the version of the guid (first nibble of the 7th byte)
+func (u *UUID) Equals(comp *UUID) bool {
+	for i, v := range u {
+		if comp[i] != v {
+			return false
+		}
+	}
+	return true
+}
+
+// SetVersion sets the version of the uuid (first nibble of the 7th byte)
 func (u *UUID) setVersion(v byte) {
 	u[6] = (v << 4) | (u[6] & 0xf)
 }
 
-// setVariant sets the variant of the guid (first nibble of the 9th byte)
+// setVariant sets the variant of the uuid (first nibble of the 9th byte)
 func (u *UUID) setVariant() {
 	// Clear the first two bits of the byte
 	u[8] = u[8] & 0x3f
