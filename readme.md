@@ -26,12 +26,6 @@ func main() {
 }
 ```
 
-## Notes
-
-### Contributing & Package status
-
-Currently this package should generate RFC4122 compliant Version 4 UUIDs and the existing APIs to do so should not change. New features may be added via pull requests, however they should not touch existing APIs
-
 ### Todo
 
 - [ ] Add optimised bulk UUID generation
